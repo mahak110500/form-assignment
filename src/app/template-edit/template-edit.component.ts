@@ -50,30 +50,31 @@ export class TemplateEditComponent implements OnInit {
 
 		 console.log(this.dataFetched)
 
-		// this.open(this.con);
+				
 	}
 	
+	
 	updateData(updatedData){
+		console.log(updatedData);
 		console.log(updatedData.value);
+
 		// this.userData.updateData(this.router.snapshot.params.id);
 		const objIndex1 = this.userData.getUserdata.findIndex((obj => obj.id == this.router.snapshot.params.id));
 		
 		console.log(this.userData.getUserdata[objIndex1])
-		this.userData.getUserdata[objIndex1].data.firstPage.name= updatedData.value.name;
-		this.userData.getUserdata[objIndex1].data.firstPage.email= updatedData.value.email;
-		this.userData.getUserdata[objIndex1].data.firstPage.gender= updatedData.value.gender;
-		this.userData.getUserdata[objIndex1].data.firstPage.dob= updatedData.value.dob;
+		this.userData.getUserdata[objIndex1].data.firstPage.name= updatedData.value.firstPage.name;
+		this.userData.getUserdata[objIndex1].data.firstPage.email= updatedData.value.firstPage.email;
+		this.userData.getUserdata[objIndex1].data.firstPage.gender= updatedData.value.firstPage.gender;
+		this.userData.getUserdata[objIndex1].data.firstPage.dob= updatedData.value.firstPage.dob;
 
-		this.userData.getUserdata[objIndex1].data.secondPage.hobbies= updatedData.value.hobbies;
-		this.userData.getUserdata[objIndex1].data.secondPage.phnno1= updatedData.value.phnno1;
-		this.userData.getUserdata[objIndex1].data.secondPage.phnno2= updatedData.value.phnno2;
-		this.userData.getUserdata[objIndex1].data.secondPage.phnno3= updatedData.value.phnno3;
+		this.userData.getUserdata[objIndex1].data.secondPage.hobbies= updatedData.value.secondPage.hobbies;
+		this.userData.getUserdata[objIndex1].data.secondPage.phnno1= updatedData.value.secondPage.phnno1;
+		this.userData.getUserdata[objIndex1].data.secondPage.phnno2= updatedData.value.secondPage.phnno2;
+		this.userData.getUserdata[objIndex1].data.secondPage.phnno3= updatedData.value.secondPage.phnno3;
 		
-		this.userData.getUserdata[objIndex1].data.thirdPage.qualification= updatedData.value.qualification;
-		this.userData.getUserdata[objIndex1].data.thirdPage.profession= updatedData.value.profession;
-		this.userData.getUserdata[objIndex1].data.thirdPage.answer= updatedData.value.answer;
-
-		
+		this.userData.getUserdata[objIndex1].data.thirdPage.qualification= updatedData.value.thirdPage.qualification;
+		this.userData.getUserdata[objIndex1].data.thirdPage.profession= updatedData.value.thirdPage.profession;
+		this.userData.getUserdata[objIndex1].data.thirdPage.answer= updatedData.value.thirdPage.answer;
 
 
 		console.log(this.userData.getUserdata);
@@ -87,7 +88,6 @@ export class TemplateEditComponent implements OnInit {
 		// this.submitted= true; 
 
 	}
-
 
 
 	public addresses: any[] = [{

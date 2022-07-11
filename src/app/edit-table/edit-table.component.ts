@@ -20,7 +20,7 @@ export class EditTableComponent implements OnInit {
     //to get the data to auto fill in input fields
 		this.dataInfo = this.userData.getUserdata;
 
-    console.log(	this.dataInfo);
+    
 		console.log('this.router.snapshot.params.id');
 		const objIndex = this.userData.getUserdata.findIndex((obj => obj.id == this.router.snapshot.params.id));
 

@@ -10,8 +10,8 @@
 
 							<div class="form-group">
 								<label for="name">Name</label>
-								<input type="text" id="name" [(ngModel)]="dataFetched.firstPage.name" name="name"
-									class="form-control" required pattern="^[a-zA-Z ]+$" #name="ngModel">
+								<input type="text" id="name" [(ngModel)]="this.dataFetched.firstPage.name" name="name"
+									class="form-control" #name="ngModel" required pattern="^[a-zA-Z ]+$" >
 								<label class="help-block" *ngIf="!name.valid && name.touched">
 									<div *ngIf="name.errors['required']">
 										Please enter a name!
@@ -28,7 +28,7 @@
 									class="form-control" required email #email="ngModel">
 								<label class="help-block" *ngIf="!email.valid && email.touched">Please enter a
 									valid
-									email!</label>
+									email!</label> 
 							</div>
 
 							<label>Gender</label>
@@ -47,8 +47,8 @@
 								<input type="date" id="dob" [(ngModel)]="dataFetched.firstPage.dob" name="dob"
 									class="form-control" required>
 							</div>
-						</div>
-							<button type="button" [disabled]="firstPage.invalid" class="btn btn-info mx-3"
+						</div><br>
+							<button type="button" style="text-align:center;" [disabled]="firstPage.invalid" class="btn btn-info mx-3"
 							mat-button matStepperNext>
 							Next
 						</button>

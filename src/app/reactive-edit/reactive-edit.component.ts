@@ -21,17 +21,6 @@ export class ReactiveEditComponent implements OnInit {
 	dataFetched;
 	idFetched: any;
 
-	// nameOld:'';
-	// emailOld:'';
-	// genderOld:'';
-	// dobOld:'';
-	// profilepicOld:'';
-	// hobbiesOld:'';
-	// phnnoOld:'';
-	// qualificationOld:'';
-	// professionOld:'';
-	// descriptionOld:'';
-
 
 	constructor(private modalService: NgbModal, private router: ActivatedRoute, private userData: UserdataService, private Onrouter: Router) { }
 
@@ -53,13 +42,9 @@ export class ReactiveEditComponent implements OnInit {
 		this.dataFetched = (this.userData.getUserdata[objIndex].data)
 		this.idFetched = (this.userData.getUserdata[objIndex].id)
 
-console.log(this.dataFetched.secondPage.phnno.phnno1)
-		// console.log(objIndex);
-		// console.log(this.dataFetched);
-		// console.log(this.idFetched);
-
-
+		
 		this.signupForm = new FormGroup({
+			
 			'name': new FormControl(this.dataFetched.firstPage.name, [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
 			'email': new FormControl(this.dataFetched.firstPage.email, [Validators.required, Validators.email]),
 			'gender': new FormControl(this.dataFetched.firstPage.gender, Validators.required),
@@ -70,10 +55,8 @@ console.log(this.dataFetched.secondPage.phnno.phnno1)
 			'qualification': new FormControl(this.dataFetched.thirdPage.qualification, Validators.required),
 			'profession': new FormControl(this.dataFetched.thirdPage.profession, Validators.required),
 			'description': new FormControl(this.dataFetched.thirdPage.description, Validators.required),
-			'contactname': new FormControl(null, [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
-			'contactno': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]{3}-[0-9]{3}-[0-9]{4}$")]),
 
-			phnno:  new FormGroup({
+			phnno: new FormGroup({
 				'phnno1': new FormControl(this.dataFetched.secondPage.phnno.phnno1, [Validators.required, Validators.maxLength(3)]),
 				'phnno2': new FormControl(this.dataFetched.secondPage.phnno.phnno2, Validators.required),
 				'phnno3': new FormControl(this.dataFetched.secondPage.phnno.phnno3, Validators.required),
@@ -88,13 +71,10 @@ console.log(this.dataFetched.secondPage.phnno.phnno1)
 
 			}),
 			'ContactDetails': new FormGroup({
-				'contactname': new FormControl(null, Validators.required),
-				'contactno': new FormControl(null, Validators.required),
+				'contactname': new FormControl(this.dataFetched.thirdPage.contactname, [Validators.required, Validators.pattern("^[A-Za-z ]+$")]),
+				'contactno': new FormControl(this.dataFetched.thirdPage.contactno, [Validators.required, Validators.pattern("^[0-9]{3}-[0-9]{3}-[0-9]{4}$")]),
 			})
 		});
-
-
-
 
 
 		this.dropdownList = [
@@ -117,19 +97,19 @@ console.log(this.dataFetched.secondPage.phnno.phnno1)
 		const objIndex1 = this.userData.getUserdata.findIndex((obj => obj.id == this.router.snapshot.params.id));
 
 		console.log(this.userData.getUserdata[objIndex1])
-		this.userData.getUserdata[objIndex1].data.firstPage.name= updatedData.value.name;
-		this.userData.getUserdata[objIndex1].data.firstPage.email= updatedData.value.email;
-		this.userData.getUserdata[objIndex1].data.firstPage.gender= updatedData.value.gender;
-		this.userData.getUserdata[objIndex1].data.firstPage.dob= updatedData.value.dob;
+		this.userData.getUserdata[objIndex1].data.firstPage.name = updatedData.value.name;
+		this.userData.getUserdata[objIndex1].data.firstPage.email = updatedData.value.email;
+		this.userData.getUserdata[objIndex1].data.firstPage.gender = updatedData.value.gender;
+		this.userData.getUserdata[objIndex1].data.firstPage.dob = updatedData.value.dob;
 
-		this.userData.getUserdata[objIndex1].data.secondPage.hobbies= updatedData.value.hobbies;
-		this.userData.getUserdata[objIndex1].data.secondPage.phnno1= updatedData.value.phnno1;
-		this.userData.getUserdata[objIndex1].data.secondPage.phnno2= updatedData.value.phnno2;
-		this.userData.getUserdata[objIndex1].data.secondPage.phnno3= updatedData.value.phnno3;
-		
-		this.userData.getUserdata[objIndex1].data.thirdPage.qualification= updatedData.value.qualification;
-		this.userData.getUserdata[objIndex1].data.thirdPage.profession= updatedData.value.profession;
-		this.userData.getUserdata[objIndex1].data.thirdPage.answer= updatedData.value.answer;
+		this.userData.getUserdata[objIndex1].data.secondPage.hobbies = updatedData.value.hobbies;
+		this.userData.getUserdata[objIndex1].data.secondPage.phnno.phnno1 = updatedData.value.phnno.phnno1;
+		this.userData.getUserdata[objIndex1].data.secondPage.phnno.phnno2 = updatedData.value.phnno.phnno2;
+		this.userData.getUserdata[objIndex1].data.secondPage.phnno.phnno3 = updatedData.value.phnno.phnno3;
+
+		this.userData.getUserdata[objIndex1].data.thirdPage.qualification = updatedData.value.qualification;
+		this.userData.getUserdata[objIndex1].data.thirdPage.profession = updatedData.value.profession;
+		this.userData.getUserdata[objIndex1].data.thirdPage.description = updatedData.value.description;
 
 		console.log(this.userData.getUserdata);
 		this.Onrouter.navigate(['']);
