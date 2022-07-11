@@ -1,0 +1,233 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">
+			Reactive Form
+		</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+			<span aria-hidden="true">
+				×
+			</span>
+		</button>
+	</div>
+	<div class="modal-body">
+
+		<div class="container main">
+			<div class="row">
+				<div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-2">
+					<form [formGroup]='signupForm' (ngSubmit)="onSubmit()">
+
+						<mat-horizontal-stepper>
+							<mat-step label="Step 1" formGroupName="firstPage">
+
+								<div class="form-group">
+									<label for="name">Username</label>
+									<input type="text" id="name" formControlName="name" class="form-control">
+								</div>
+								<!-- <span *ngIf="!signupForm.get('name').valid && signupForm.get('name').touched"
+									class="help-block">
+									<span *ngIf="signupForm.get('name').errors['pattern']">This name is invalid</span>
+									<span *ngIf="signupForm.get('name').errors['required']">This field is
+										required!</span>
+								</span> -->
+
+								<div class="form-group">
+									<label for="email">email</label>
+									<input type="text" id="email" formControlName="email" class="form-control">
+								</div>
+								<!-- <span class="text-danger" *ngIf="signupForm.firstPage.controls.email.valid && 
+								signupForm.firstPage.controls.email.touched">*</span> -->
+
+
+
+								<!-- <span *ngIf="!signupForm.firstPage.get('email').valid && signupForm.firstPage.get('email').touched"
+									class="help-block">
+									<span *ngIf="signupForm.firstPage.get('email').errors['required']">This field is
+										required!</span>
+									<span *ngIf="signupForm.firstPage.get('email').errors['email']">This email is invalid</span>
+								</span><br> -->
+
+								<label>Gender</label>
+								<div class="radio" *ngFor="let gender of genders">
+									<label>
+										<input type="radio" id="gender" formControlName="gender" [value]="gender">{{
+										gender }}
+									</label>
+								</div>
+								<!-- <span *ngIf="!signupForm.get('gender').valid && signupForm.get('gender').touched"
+									class="help-block">Please select a gender</span> -->
+
+								<div class="form-group">
+									<label for="dob">DOB</label>
+									<input type="date" id="dob" formControlName="dob" class="form-control">
+								</div>
+								<!-- <span *ngIf="!signupForm.get('dob').valid && signupForm.get('dob').touched"
+									class="help-block">Please enter a dob</span> -->
+
+								<button type="button" [disabled]="signupForm.get('firstPage').invalid" class="btn btn-info mx-3"
+									mat-button matStepperNext>
+									Next
+								</button>
+							</mat-step>
+
+
+							<mat-step label="Step 2" formGroupName="secondPage">
+
+								<div class="form-group">
+									<label for="profilepic">Profile picture</label>
+									<input type="file" id="profilepic" formControlName="profilepic"
+										class="form-control">
+								</div>
+								<!-- <span
+									*ngIf="!signupForm.get('profilepic').valid && signupForm.get('profilepic').touched"
+									class="help-block">Please select a profile picture</span> -->
+
+								<label>Hobbies</label>
+								<div *ngFor="let hobbie of hobbies" formGroupName="hobbies">
+									<label>
+										<input type="checkbox" [value]="hobbie.selected"
+											formControlName="{{hobbie.name}}">{{hobbie.name}}
+									</label>
+								</div>
+
+								<div class="form-group phnno" formGroupName="phnno">
+									<label for="phnno">Phone number</label><br>
+									<input type="tel" id="phnno1" formControlName="phnno1" class="form-control">
+									<input type="tel" id="phnno2" formControlName="phnno2" class="form-control">
+									<input type="tel" id="phnno3" formControlName="phnno3" class="form-control"><br>
+									<small>Format: 123-456-7890</small>
+								</div>
+								<!-- <span *ngIf="!signupForm.get('phnno').valid && signupForm.get('phnno').touched"
+									class="help-block">Please enter a phone number</span> -->
+
+								<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+									Previous
+								</button>
+
+								<button type="button" [disabled]="signupForm.get('secondPage').invalid" class="btn btn-info mx-3"
+									mat-button matStepperNext>
+									Next
+								</button>
+							</mat-step>
+
+
+							<mat-step label="Step 3" formGroupName="thirdPage">
+								<div style="width:50%">
+									<label>Qualification</label>
+									<ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList"
+										formControlName="qualification">
+									</ng-multiselect-dropdown>
+								</div>
+								<!-- <span
+									*ngIf="!signupForm.get('qualification').valid && signupForm.get('qualification').touched"
+									class="help-block">Please select a qualification</span> -->
+
+								<div class="form-group">
+									<label for="profession">Profession</label>
+									<select id="profession" class="form-control" formControlName="profession">
+										<option value="option 1">option 1</option>
+										<option value="option 2">option 2</option>
+										<option value="option 3">option 3</option>
+										<option value="option 4">option 4</option>
+									</select>
+								</div>
+								<!-- <span
+									*ngIf="!signupForm.get('profession').valid && signupForm.get('profession').touched"
+									class="help-block">Please select a profession</span> -->
+
+								<div class="form-group">
+									<label for="description">Short Description</label>
+									<textarea name="description" id="description" formControlName="description" rows="3"
+										class="form-control"></textarea>
+								</div>
+								<!-- <span
+									*ngIf="!signupForm.get('description').valid && signupForm.get('description').touched"
+									class="help-block">Please enter description</span> -->
+
+
+								<div class="row justify-content-center" formGroupName="ContactDetails">
+									<div class="col-12">
+										<h2>Contact Person</h2>
+										<button type="button" class="btn btn-primary mb-2" (click)="addAddress()">Add
+											More</button>
+										<section class="container border mb-4 p-3"
+											*ngFor="let address of addresses; let i = index;">
+
+											<div class="row">
+												<div class="col-6">
+													<h4>Contact {{i + 1}}</h4>
+												</div>
+												<div class="col-6 text-right">
+													<button type="button" class="btn btn-danger btn-sm"
+														(click)="removeAddress(i)">Remove</button>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-6">
+														<div class="form-group">
+															<label>Name</label>
+															<input type="text" placeholder="Name" class="form-control"
+																formControlName="contactname" required>
+														</div>
+														<!-- <span
+															*ngIf="!signupForm.get('ContactDetails.contactname').valid && signupForm.get('ContactDetails.contactname').touched"
+															class="help-block">
+															<span
+																*ngIf="signupForm.get('ContactDetails.contactname').errors['pattern']">This
+																name is invalid</span>
+															<span
+																*ngIf="signupForm.get('ContactDetails.contactname').errors['required']">This
+																field is required!</span>
+														</span> -->
+													</div>
+													<div class="col-6">
+														<div class="form-group">
+															<label>Phone no.</label>
+															<input type="text" placeholder="Phone no."
+																class="form-control" formControlName="contactno"
+																required>
+															<small>Format: 123-456-7890</small>
+
+														</div>
+														<!-- <span
+															*ngIf="!signupForm.get('ContactDetails.contactno').valid && signupForm.get('ContactDetails.contactno').touched"
+															class="help-block">Please enter a phone number</span> -->
+
+													</div>
+												</div>
+											</div>
+
+										</section>
+
+									</div>
+								</div>
+								<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+									Previous
+								</button>
+
+							</mat-step>
+							<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+								Previous
+							</button>
+
+						</mat-horizontal-stepper>
+
+						<button class="btn btn-primary" type="submit">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
+			Save
+		</button>
+	</div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+	Click Here
+</button>
+<hr>

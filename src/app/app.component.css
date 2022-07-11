@@ -1,0 +1,26 @@
+form{
+    width: 70%;
+}
+
+.form-group{
+    margin-bottom: 1px;
+}
+.col-6{
+    width: 72%;
+}
+.mat-horizontal-stepper-header{
+    display: block;
+}
+span{
+    display: none;
+}
+.mat-step-icon{
+    display: none;
+}
+
+.container{
+    margin-top: 30px;
+}
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+}

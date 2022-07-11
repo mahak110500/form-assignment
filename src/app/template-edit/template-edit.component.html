@@ -1,0 +1,187 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+			<form (ngSubmit)="updateData(updatedData)" #updatedData="ngForm">
+
+				<mat-horizontal-stepper>
+
+					<mat-step label="Step 1" ngModelGroup="firstPage" #firstPage="ngModelGroup">
+						<div class="user-data">
+
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input type="text" id="name" [(ngModel)]="dataFetched.firstPage.name" name="name"
+									class="form-control" required pattern="^[a-zA-Z ]+$" #name="ngModel">
+								<label class="help-block" *ngIf="!name.valid && name.touched">
+									<div *ngIf="name.errors['required']">
+										Please enter a name!
+									</div>
+									<div *ngIf="name.errors['pattern']">
+										Please enter a valid name!
+									</div>
+								</label>
+							</div>
+
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input type="email" id="email" [(ngModel)]="dataFetched.firstPage.email" name="email"
+									class="form-control" required email #email="ngModel">
+								<label class="help-block" *ngIf="!email.valid && email.touched">Please enter a
+									valid
+									email!</label>
+							</div>
+
+							<label>Gender</label>
+							<div class="form-group" *ngFor="let gender of genders">
+								<label>
+									<input type="radio" [(ngModel)]="dataFetched.firstPage.gender" name="gender"
+										[value]="gender" required #gender="ngModel">{{ gender }}
+									<label class="help-block" *ngIf="!gender.valid && gender.touched">Please
+										select a
+										gender!</label>
+								</label>
+							</div>
+
+							<div class="form-group">
+								<label for="dob">DOB</label>
+								<input type="date" id="dob" [(ngModel)]="dataFetched.firstPage.dob" name="dob"
+									class="form-control" required>
+							</div>
+						</div>
+							<button type="button" [disabled]="firstPage.invalid" class="btn btn-info mx-3"
+							mat-button matStepperNext>
+							Next
+						</button>
+
+
+						
+					</mat-step>
+
+
+					<mat-step label="Step 2" ngModelGroup="secondPage" #secondPage="ngModelGroup">
+						<div class="user-data">
+
+							<div class="form-group">
+								<label for="profilepic">Profile Picture</label>
+								<input type="file" id="profilepic" class="form-control"
+									 name="profilepic" >
+							</div>
+
+							<div ngModelGroup="hobbies">
+								<label>Hobbies</label>
+								<div class="form-group" *ngFor="let hobbie of dataFetched.secondPage.hobbies | keyvalue"
+									value="{{hobbie.name}}">
+									<label for="hobbies">
+										<input type="checkbox" [(ngModel)]="hobbie.value" name="{{hobbie.key}}">{{
+										hobbie.key}}
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group phnno" ngModelGroup="phnno">
+								<label for="phnno">Phone number</label><br>
+								<input type="tel" id="phnno" [(ngModel)]="dataFetched.secondPage.phnno.phnno1" name="phnno1" class="form-control"
+									pattern="[0-9]{3}" maxlength="3">
+								<input type="tel" id="phnno" [(ngModel)]="dataFetched.secondPage.phnno.phnno2" name="phnno2" class="form-control" maxlength="3"
+									pattern="[0-9]{3}" required>
+								<input type="tel" id="phnno" [(ngModel)]="dataFetched.secondPage.phnno.phnno3" name="phnno3" class="form-control" maxlength="4"
+									pattern="[0-9]{4}" required><br>
+								<small>Format: 123-456-7890</small><br>
+							</div>
+
+						</div>
+						<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+							Previous
+						</button>
+						<button type="button" [disabled]="secondPage.invalid" class="btn btn-info mx-3"
+							mat-button matStepperNext>
+							Next
+						</button>
+					</mat-step>
+
+					<mat-step label="Step 3" ngModelGroup="thirdPage" #thirdPage="ngModelGroup">
+						<div class="user-data">
+
+							<div style="width:50%">
+								<label>Qualification</label>
+								<ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList"
+									id="qualification" [(ngModel)]="dataFetched.thirdPage.qualification"
+									name="qualification">
+								</ng-multiselect-dropdown>
+							</div>
+
+							<div class="form-group">
+								<label for="profession">Profession</label>
+								<select id="profession" class="form-control" id="profession"
+									[(ngModel)]="dataFetched.thirdPage.profession" name="profession">
+									<option value="option 1">option 1</option>
+									<option value="option 2">option 2</option>
+									<option value="option 3">option 3</option>
+									<option value="option 4">option 4</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="description">Short description</label>
+								<textarea name="answer" rows="3" class="form-control" id="description"
+									[(ngModel)]="dataFetched.thirdPage.description" name="description"></textarea>
+							</div>
+
+							<div class="row justify-content-center" ngModelGroup="ContactPerson">
+								<div class="col-6">
+									<h2>Contact Person</h2>
+									<button type="button" class="btn btn-primary mb-2" (click)="addAddress()">Add
+										More</button>
+									<section class="container border mb-4 p-3"
+										*ngFor="let address of addresses; let i = index;">
+
+										<div class="row">
+											<div class="col-6">
+												<h4>Contact {{i + 1}}</h4>
+											</div>
+											<div class="col-6 text-right">
+												<button type="button" class="btn btn-danger btn-sm"
+													(click)="removeAddress(i)">Remove</button>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group">
+												<div class="col-6">
+													<div class="form-group">
+														<label>Name</label>
+														<input type="text"
+															[(ngModel)]="dataFetched.thirdPage.ContactPerson.address_1"
+															name="address_{{address.id}}" placeholder="Name" required>
+													</div>
+												</div>
+												<div class="col-6">
+													<div class="form-group">
+														<label>Phone no.</label>
+														<input type="text"
+															[(ngModel)]="dataFetched.thirdPage.ContactPerson.street_1"
+															name="street_{{address.id}}" placeholder="Phone no."
+															required>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</section>
+
+								</div>
+							</div>
+
+						</div>
+						<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+							Previous
+						</button>
+					</mat-step>
+
+				</mat-horizontal-stepper>
+
+
+				<button class="btn btn-primary" type="submit">Update</button>
+			</form>
+		</div>
+	</div>
+</div>

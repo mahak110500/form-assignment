@@ -1,0 +1,258 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">
+			Template-Driven Form
+		</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+			<label aria-hidden="true">
+				×
+			</label>
+		</button>
+	</div>
+	<div class="modal-body">
+
+		<div class="container main">
+			<div class="row">
+				<div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-2">
+					<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+
+						<mat-horizontal-stepper #stepper>
+
+							<mat-step label="Step 1" ngModelGroup="firstPage" #firstPage="ngModelGroup">
+								<div class="user-data">
+
+									<div class="form-group">
+										<label for="name">Name</label>
+										<input type="text" id="name" ngModel name="name" class="form-control" required
+											pattern="^[a-zA-Z ]+$" #name="ngModel">
+										<label class="help-block" *ngIf="!name.valid && name.touched">
+											<div *ngIf="name.errors['required']">
+												Please enter a name!
+											</div>
+											<div *ngIf="name.errors['pattern']">
+												Please enter a valid name!
+											</div>
+										</label>
+									</div>
+
+									<div class="form-group">
+										<label for="email">Email</label>
+										<input type="email" id="email" ngModel name="email" class="form-control"
+											required email #email="ngModel">
+										<label class="help-block" *ngIf="!email.valid && email.touched"><label
+												class="help-block" *ngIf="!email.valid && email.touched">
+												<div *ngIf="email.errors['required']">
+													Please enter an email!
+												</div>
+												<div *ngIf="email.errors['email']">
+													Please enter a valid email!
+												</div>
+											</label>
+										</label>
+									</div>
+
+									<label>Gender</label>
+									<div class="form-group" *ngFor="let gender of genders">
+										<label>
+											<input type="radio" ngModel name="gender" [value]="gender" required
+												#gender="ngModel">{{ gender }}
+											<label class="help-block" *ngIf="!gender.valid && gender.touched">Please
+												select a
+												gender!</label>
+										</label>
+									</div>
+
+									<div class="form-group">
+										<label for="dob">DOB</label>
+										<input type="date" id="dob" ngModel name="dob" class="form-control" required
+											#dob="ngModel">
+										<label class="help-block" *ngIf="!dob.valid && dob.touched">Please
+											select a
+											date!</label>
+
+									</div>
+								</div>
+								<button type="button" [disabled]="firstPage.invalid" class="btn btn-info mx-3"
+									mat-button matStepperNext>
+									Next
+								</button>
+							</mat-step>
+
+
+							<mat-step label="Step 2" ngModelGroup="secondPage" #secondPage="ngModelGroup">
+								<div class="user-data">
+
+									<div class="form-group">
+										<label for="profilepic">Profile Picture</label>
+										<input type="file" id="profilepic" class="form-control" name="profilepic"
+											ngModel #profilepic="ngModel" required>
+										<label class="help-block" *ngIf="!profilepic.valid && profilepic.touched">Please
+											select a image!</label>
+									</div>
+
+									<div ngModelGroup="hobbies">
+										<label>Hobbies</label>
+										<div class="form-group" *ngFor="let hobbie of hobbies">
+											<label for="hobbies">
+												<input type="checkbox" [(ngModel)]="hobbie.selected"
+													name="{{hobbie.name}}">{{
+												hobbie.name}}
+											</label>
+										</div>
+									</div>
+
+									<div class="form-group phnno" ngModelGroup="phnno">
+										<label for="phnno">Phone number</label><br>
+										<input type="tel" id="phnno" ngModel name="phnno1" class="form-control"
+											pattern="[0-9]{3}" maxlength="3">
+										<input type="tel" id="phnno" ngModel name="phnno2" class="form-control" maxlength="3"
+											pattern="[0-9]{3}" required>
+										<input type="tel" id="phnno" ngModel name="phnno3" class="form-control" maxlength="4"
+											pattern="[0-9]{4}" required><br>
+										<small>Format: 123-456-7890</small><br>
+										<!-- <label class="help-block" *ngIf="!phnno1.valid && phnno1.touched">
+											<div *ngIf="phnno1.errors['required']">
+												Please enter a phnno1!
+											</div>
+											<div *ngIf="phnno1.errors['pattern']">
+												*
+											</div>
+										</label> -->
+
+									</div>
+								</div>
+
+								<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+									Previous
+								</button>
+
+								<button type="button" [disabled]="secondPage.invalid" class="btn btn-info mx-3"
+									mat-button matStepperNext>
+									Next
+								</button>
+							</mat-step>
+
+
+
+							<mat-step label="Step 3" ngModelGroup="thirdPage" #thirdPage="ngModelGroup">
+								<div class="user-data">
+
+									<div style="width:50%">
+										<label>Qualification</label>
+										<ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList"
+											name="qualification" ngModel #qualification="ngModel" required>
+										</ng-multiselect-dropdown>
+									</div>
+									<label class="help-block"
+										*ngIf="!qualification.valid && qualification.touched">Please select
+										qualification!</label>
+
+									<div class="form-group">
+										<label for="profession">Profession</label>
+										<select id="profession" class="form-control" ngModel name="profession"
+											#profession="ngModel" required>
+											<option value="option 1">option 1</option>
+											<option value="option 2">option 2</option>
+											<option value="option 3">option 3</option>
+											<option value="option 4">option 4</option>
+										</select>
+										<label class="help-block" *ngIf="!profession.valid && profession.touched">Please
+											select
+											profession!</label>
+
+									</div>
+
+									<div class="form-group">
+										<label for="description">Short description</label>
+										<textarea name="answer" rows="3" class="form-control" required
+											name="description" ngModel #description="ngModel"></textarea>
+										<label class="help-block"
+											*ngIf="!description.valid && description.touched">Please enter Short
+											description</label>
+									</div>
+
+									<div class="row justify-content-center" ngModelGroup="ContactPerson">
+										<div class="col-6">
+											<h2>Contact Person</h2>
+											<button type="button" class="btn btn-primary mb-2"
+												(click)="addAddress()">Add
+												More</button>
+											<section class="container border mb-4 p-3"
+												*ngFor="let address of addresses; let i = index;">
+
+												<div class="row">
+													<div class="col-6">
+														<h4>Contact {{i + 1}}</h4>
+													</div>
+													<div class="col-6 text-right">
+														<button type="button" class="btn btn-danger btn-sm"
+															(click)="removeAddress(i)">Remove</button>
+													</div>
+												</div>
+												<div class="row">
+													<div class="form-group">
+														<div class="col-6">
+															<div class="form-group">
+																<label>Name</label>
+																<input type="text" [(ngModel)]="address.address"
+																	name="address_{{address.id}}" placeholder="Name"
+																	#contactname="ngModel" required>
+																<label class="help-block"
+																	*ngIf="!contactname.valid && contactname.touched">Please
+																	enter a contact Name!</label>
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="form-group">
+																<label>Phone no.</label>
+																<input type="text" [(ngModel)]="address.street"
+																	name="street_{{address.id}}" placeholder="Phone no."
+																	required #contactno="ngModel">
+																<label class="help-block"
+																	*ngIf="!contactno.valid && contactno.touched">Please
+																	enter a contact number!</label>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</section>
+
+										</div>
+									</div>
+
+								</div>
+								<button type="button" class="btn btn-warning" mat-button matStepperPrevious>
+									Previous
+								</button>
+								
+							</mat-step>
+
+						</mat-horizontal-stepper>
+
+
+						<button class="btn btn-primary" type="submit">Submit</button>
+
+						<!-- <div class="stepperbtn">
+							<button (click)="goBack(stepper)" type="button">Back</button>
+							<button (click)="goForward(stepper)" type="button">Next</button>
+						</div> -->
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
+			Save
+		</button>
+	</div>
+
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+	Click Here
+</button>
+<hr>
